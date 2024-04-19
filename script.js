@@ -3,8 +3,10 @@ const playerNameMode = document.querySelector(".second-container");
 const playMode = document.querySelector(".third-container");
 const player1Name = document.querySelector("#first-player");
 const player1ScoreDisplay = document.querySelector(".scores-player-one");
+const player1InfoContainer = document.querySelector(".player-one-info-container")
 const player2Name = document.querySelector("#second-player");
 const player2ScoreDisplay = document.querySelector(".scores-player-two");
+const player2InfoContainer = document.querySelector(".player-two-info-container")
 const gameOptions = document.querySelectorAll(".game-options");
 const gameZone = document.querySelector(".game-zone");
 const buttonPvp = document.querySelector(".button-pvp");
@@ -50,10 +52,14 @@ const startNewGame = function () {
                     gameOptions[i].innerText = playerOneInfo.getChoice;
                     gameArray[i] = playerOneInfo.getChoice
                     curentTurn = 0
+                    player2InfoContainer.classList.add("border")
+                    player1InfoContainer.classList.remove("border")
                 } else {
                     gameOptions[i].innerText = playerTwoInfo.getChoice;
                     gameArray[i] = playerTwoInfo.getChoice
                     curentTurn = 1
+                    player1InfoContainer.classList.add("border")
+                    player2InfoContainer.classList.remove("border")
                 }
             }
             console.log(gameArray)
@@ -98,8 +104,11 @@ buttonNewGame.addEventListener("click", () => {
 
 buttonReset.addEventListener("click", () => {
     resetGameArray();
-    curentTurn = 1
-    but
+    curentTurn = 1;
+    player1InfoContainer.classList.add("border")
+    player1InfoContainer.classList.remove("winning-border")
+    player2InfoContainer.classList.remove("border")
+    player2InfoContainer.classList.remove("winning-border")
 })
 
 buttonNext.addEventListener("click", () => {
@@ -146,9 +155,13 @@ const updateScore = function(choice) {
     if (choice === "X") {
         player1Score++;
         player1ScoreDisplay.innerText = player1Score;
+        player1InfoContainer.classList.add("winning-border")
+        player2InfoContainer.classList.remove("border")
     } else {
         player2Score++;
         player2ScoreDisplay.innerText = player2Score;
+        player2InfoContainer.classList.add("winning-border")
+        player1InfoContainer.classList.remove("border")
     }
 }
 

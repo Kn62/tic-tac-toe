@@ -214,3 +214,11 @@ input {
 .scores-player-two {
     font-size: 2.5rem;
 }
+
+.border {
+    outline: 3px solid red;
+}
+
+.winning-border {
+    outline: 3px solid green;
+}
