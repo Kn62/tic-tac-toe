@@ -200,3 +200,17 @@ input {
     background-color: rgba(255, 255, 255, 0.3);
     cursor: pointer;
 }
+
+
+.winner {
+    background-color: rgba(0, 0, 0, 0.5)
+}
+
+.locked {
+    pointer-events: none;
+}
+
+.scores-player-one,
+.scores-player-two {
+    font-size: 2.5rem;
+}
