@@ -16,15 +16,11 @@ const buttonNext = document.querySelector(".next-button");
 const buttonNewGame = document.querySelector(".newgame-button");
 const buttonReset = document.querySelector(".reset-button");
 
-
-
 let isPVE = false; 
 let gameArray = [];
 let player1Score = 0;
 let player2Score = 0;
 let curentTurn = 1;
-player1ScoreDisplay.innerText = player1Score;
-player2ScoreDisplay.innerText = player2Score;
 
 const playerFactory = function (nickname, choice) {
     const getNickname =  nickname;
@@ -41,19 +37,38 @@ const displayName = function (one, two ) {
 
 const startNewGame = function () {
     const playerOneInfo = playerFactory(player1Name.value, "X");
-    const playerTwoInfo = playerFactory(player2Name.value, "O");    
+    const playerTwoInfo = playerFactory(player2Name.value, "O");
+    player1ScoreDisplay.innerText = player1Score;
+    player2ScoreDisplay.innerText = player2Score;
     
     for (let i = 0; i < gameOptions.length; i++) {
         gameArray.push(`${gameOptions[i].innerText}`)
 
         gameOptions[i].addEventListener("click", () => {
-            if (gameOptions[i].innerText === "") {
+            if (gameOptions[i].innerText === "" ) {
                 if (curentTurn === 1) {
                     gameOptions[i].innerText = playerOneInfo.getChoice;
                     gameArray[i] = playerOneInfo.getChoice
-                    curentTurn = 0
                     player2InfoContainer.classList.add("border")
                     player1InfoContainer.classList.remove("border")
+                    curentTurn = 0
+                    winningCheck(gameArray)
+                    if (isPVE === true) {
+                        let botChoiceArray = []
+                        for (let i = 0; i < gameOptions.length; i++) {
+                            if (gameArray[i] === "") {
+                                botChoiceArray.push(i)
+                            }
+                        }
+                        const botChoice = Math.floor(Math.random() * botChoiceArray.length);
+                        const result = botChoiceArray[botChoice];
+
+                        gameOptions[result].innerText = playerTwoInfo.getChoice;
+                        gameArray[result] = playerTwoInfo.getChoice;
+                        curentTurn = 1;
+                        player1InfoContainer.classList.add("border");
+                        player2InfoContainer.classList.remove("border");
+                    }
                 } else {
                     gameOptions[i].innerText = playerTwoInfo.getChoice;
                     gameArray[i] = playerTwoInfo.getChoice
@@ -62,9 +77,8 @@ const startNewGame = function () {
                     player2InfoContainer.classList.remove("border")
                 }
             }
-            console.log(gameArray)
             winningCheck(gameArray)
-        } )
+        })
     }
 
 
@@ -82,42 +96,6 @@ const swapDisplayContainer = function (from, to) {
  from.style.display = "none";
  to.style.display = "flex";
 }
-
-buttonPvp.addEventListener("click", () => {
-    swapDisplayContainer(gameMode, playerNameMode)
-})
-
-buttonPve.addEventListener("click", () => {
-    swapDisplayContainer(gameMode, playerNameMode);
-    player2Name.value = "BOT";
-    player2Name.disabled = "true";
-    isPVE = true
-})
-
-buttonBack.addEventListener("click", () => {
-    window.location.reload();
-})
-
-buttonNewGame.addEventListener("click", () => {
-    window.location.reload();
-})
-
-buttonReset.addEventListener("click", () => {
-    resetGameArray();
-    curentTurn = 1;
-    buttonReset.innerText = "Reset";
-    player1InfoContainer.classList.add("border")
-    player1InfoContainer.classList.remove("winning-border")
-    player2InfoContainer.classList.remove("border")
-    player2InfoContainer.classList.remove("winning-border")
-})
-
-buttonNext.addEventListener("click", () => {
-    startNewGame();
-    swapDisplayContainer(playerNameMode, playMode);
-    displayName(player1Name.value, player2Name.value);
-
-})
 
 const winningCheck = function (array) {
     const winningCondition = [
@@ -173,3 +151,60 @@ const lockGameZone = function () {
     buttonReset.innerText = "Play Again";
 }
 
+buttonPvp.addEventListener("click", () => {
+    swapDisplayContainer(gameMode, playerNameMode)
+})
+
+buttonPve.addEventListener("click", () => {
+    swapDisplayContainer(gameMode, playerNameMode);
+    player2Name.value = "BOT";
+    player2Name.disabled = "true";
+    isPVE = true
+})
+
+buttonBack.addEventListener("click", () => {
+    window.location.reload();
+})
+
+buttonNewGame.addEventListener("click", () => {
+    window.location.reload();
+})
+
+buttonReset.addEventListener("click", () => {
+    resetGameArray();
+    curentTurn = 1;
+    buttonReset.innerText = "Reset";
+    player1InfoContainer.classList = "player-one-info-container border";
+    player2InfoContainer.classList = "player-two-info-container";
+})
+
+buttonNext.addEventListener("click", () => {
+    startNewGame();
+    swapDisplayContainer(playerNameMode, playMode);
+    displayName(player1Name.value, player2Name.value);
+
+})
+
+
+
+
+
+// gameOptions[i].addEventListener("click", () => {
+//     if (gameOptions[i].innerText === "") {
+//         if (curentTurn === 1) {
+//             gameOptions[i].innerText = playerOneInfo.getChoice;
+//             gameArray[i] = playerOneInfo.getChoice
+//             curentTurn = 0
+//             player2InfoContainer.classList.add("border")
+//             player1InfoContainer.classList.remove("border")
+//         } else {
+//             gameOptions[i].innerText = playerTwoInfo.getChoice;
+//             gameArray[i] = playerTwoInfo.getChoice
+//             curentTurn = 1
+//             player1InfoContainer.classList.add("border")
+//             player2InfoContainer.classList.remove("border")
+//         }
+//     }
+//     console.log(gameArray)
+//     winningCheck(gameArray)
+// } )
