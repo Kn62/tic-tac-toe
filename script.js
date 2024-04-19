@@ -105,6 +105,7 @@ buttonNewGame.addEventListener("click", () => {
 buttonReset.addEventListener("click", () => {
     resetGameArray();
     curentTurn = 1;
+    buttonReset.innerText = "Reset";
     player1InfoContainer.classList.add("border")
     player1InfoContainer.classList.remove("winning-border")
     player2InfoContainer.classList.remove("border")
