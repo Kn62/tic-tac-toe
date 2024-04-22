@@ -52,7 +52,6 @@ const startNewGame = function () {
                     player2InfoContainer.classList.add("border")
                     player1InfoContainer.classList.remove("border")
                     curentTurn = 0
-                    winningCheck(gameArray)
                     if (isPVE === true) {
                         let botChoiceArray = []
                         for (let i = 0; i < gameOptions.length; i++) {
